@@ -1,0 +1,11 @@
+<h1>Launch Selection</h1>
+
+<%= link_to 'Create new entry', new_meal_path %>
+<%= link_to 'select monthly entries', new_launch_package_path %>
+
+<h2>Packages per user</h2>
+<% @meals.map do |meal| %>
+  <h3> <%= meal.launch_packages.user_id %> </h3>
+
+<% end %>
+

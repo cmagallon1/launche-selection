@@ -1,0 +1,11 @@
+<h1>Meals per user</h1>
+
+<% @users.map do |user| %>
+  <h2> <%= user.name %> </h2>
+  <ul>
+    <% user.meals.map do |meal| %>
+      <li> <%= meal.name %></li>
+      <img src=<%= meal.image %> width="200px">
+    <% end %>
+  </ul>
+<% end %>

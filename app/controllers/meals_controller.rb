@@ -1,9 +1,5 @@
 class MealsController < ApplicationController
 
-  def index
-    @meals = Meal.all
-  end
-
   def new
     @meal = Meal.new
   end
@@ -19,6 +15,6 @@ class MealsController < ApplicationController
 
   private 
   def meal_params 
-    params.require(:meal).permit(:name, :image)
+    params.require(:meal).permit(:meal_name, :image)
   end
 end

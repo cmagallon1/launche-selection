@@ -1,0 +1,24 @@
+<h1>Meals per user</h1>
+
+<%= link_to 'Back', meals_path %>
+
+<% user = '' %>
+<% month = '' %>
+
+<% @packages.map do |record| %>
+  <% if month != record.month %>
+    <% month = record.month %>
+    <h2> <%= month %> </h2>
+
+  <% end %>
+  <% if user != record.user.name %>
+    <% user = record.user.name %>
+    <h2><%= user %></h2>
+  <% end %>
+
+  <ul>
+    <li> <%= record.meal.meal_name %></li>
+    <img src=<%= record.meal.image %> width="200px">
+  </ul>
+<% end %>
+

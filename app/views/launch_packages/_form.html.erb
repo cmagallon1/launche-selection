@@ -1,0 +1,35 @@
+<%= form_with model: @package, local:true do |f| %>
+  <% if @package.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <% pluralize(@package.errors.count, "error") %>
+        errors prohibit this package to be saved
+      </h2>
+      <ul>
+        <%= @package.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <h3>Select the user fot this package</h3>
+  <p>
+    <%= f.label :user_id %>
+    <%= f.collection_select(:users, User.all, :id, :name, { include_blank: false, include_hidden: false }) %> 
+  </p>
+
+  <h3>Select 5 meals for your package(just 5)</h3>
+  <p>
+  <%= f.label :meals %></br>
+    <%= f.collection_select(:meals, Meal.all, :id, :meal_name, { include_blank: false, include_hidden: false }, { multiple: true}) %> 
+  </p>
+  <h3>Select the month for that package</h3>
+  <p>
+    <%= render 'months'%> 
+  </p>
+  <p>
+    <%= f.submit :submit %>
+  </p>
+<%end%>
+
+

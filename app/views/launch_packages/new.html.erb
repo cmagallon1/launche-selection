@@ -1,20 +1,6 @@
-<h1> Select your 5 meal, insert the number of the meals </h1>
+<h1>Build your month package</h1>
+<%= render 'form' %>
+<%= link_to 'Back', meals_path %>
 
 
-<%= form_with scope: :package, url: launch_packages_url, local:true do |f| %>
-    <% if @meals.any? %>
-      <ul>
-        <% @meals.map do |meal| %>
-          <li><%= meal.name %>:<%= meal.id %></li>
-        <% end %>
-      </ul>
-      <%= f.label :user_id %>
-      <%= f.text_field :user_id %>
-
-      <%= f.label :meal_id %>
-      <%= f.text_field :meal_id %>
-
-      <%= f.submit :submit %>
-  <%end%>
-<%end%>
 

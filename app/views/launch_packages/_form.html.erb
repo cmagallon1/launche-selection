@@ -1,0 +1,22 @@
+<%= form_with model: @package, local:true do |f| %>
+  <h3>Select the user fot this package</h3>
+  <p>
+    <%= f.label :user_id %>
+    <%= f.collection_select(:users, User.all, :id, :name, { include_blank: false, include_hidden: false }) %> 
+  </p>
+
+  <h3>Select 5 meals for your package(just 5)</h3>
+  <p>
+  <%= f.label :meals %></br>
+    <%= f.collection_select(:meals, Meal.all, :id, :meal_name, { include_blank: false, include_hidden: false }, { multiple: true}) %> 
+  </p>
+  <h3>Select the month for that package</h3>
+  <p>
+    <%= render 'months'%> 
+  </p>
+  <p>
+    <%= f.submit :submit %>
+  </p>
+<%end%>
+
+

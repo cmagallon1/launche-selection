@@ -10,17 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_11_203214) do
+ActiveRecord::Schema.define(version: 2020_03_11_224802) do
 
   create_table "launch_packages", force: :cascade do |t|
     t.integer "user_id"
     t.integer "meal_id"
+    t.integer "month"
     t.index ["meal_id"], name: "index_launch_packages_on_meal_id"
     t.index ["user_id"], name: "index_launch_packages_on_user_id"
   end
 
   create_table "meals", force: :cascade do |t|
-    t.string "name"
+    t.string "meal_name"
     t.string "image"
   end
 

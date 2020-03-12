@@ -1,17 +1,4 @@
 <%= form_with model: @package, local:true do |f| %>
-  <% if @package.errors.any? %>
-    <div id="error_explanation">
-      <h2>
-        <% pluralize(@package.errors.count, "error") %>
-        errors prohibit this package to be saved
-      </h2>
-      <ul>
-        <%= @package.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
   <h3>Select the user fot this package</h3>
   <p>
     <%= f.label :user_id %>

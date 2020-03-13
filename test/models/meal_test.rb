@@ -3,18 +3,21 @@ require 'test_helper'
 class MealTest < ActiveSupport::TestCase
 
   def test_save_meal
-    assert create(:meal)
+    assert build(:meal).valid?
+  end
+
+  def test_save_meal_without_name
+    meal = build(:meal, meal_name: "")
+    assert_not meal.valid?
+  end
+
+  def test_save_meal_without_name
+    meal = build(:meal, image: "")
+    assert_not meal.valid?
   end
 
   def test_save_meal_without_params
     meal = Meal.new
-    assert_not meal.save
-  end
-
-  def test_meal_is_related_with_users
-    create(:user)
-    create(:meal)
-    create(:launch_package)
-    assert Meal.all.sample.users
+    assert_not meal.valid?
   end
 end

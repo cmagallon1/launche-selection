@@ -2,11 +2,11 @@
   <% if @meal.errors.any? %>
     <div id="error_explanation">
       <h2>
-        <% pluralize(@package.errors.count, "error") %>
+        <% pluralize(@meal.errors.count, "error") %>
         errors prohibit this package to be saved
       </h2>
       <ul>
-        <%= @package.errors.full_messages.each do |msg| %>
+        <% @meal.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
         <% end %>
       </ul>

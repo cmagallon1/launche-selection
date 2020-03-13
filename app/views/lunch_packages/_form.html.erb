@@ -11,9 +11,8 @@
     <%= f.collection_select(:meals, Meal.all, :id, :meal_name, { include_blank: false, include_hidden: false }, { multiple: true}) %> 
   </p>
   <h3>Select the month for that package</h3>
-  <p>
-    <%= render 'months'%> 
-  </p>
+  <%= select_month(Date.today) %>
+  <%= select_year(Date.today, :start_year => Date.today.year, :end_year => 8.years.from_now.year) %>
   <p>
     <%= f.submit :submit %>
   </p>

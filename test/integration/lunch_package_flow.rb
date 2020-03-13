@@ -12,7 +12,7 @@ class LunchPackageFlowTest < ActionDispatch::IntegrationTest
     create_meals
     post lunch_packages_path,
       params: { 
-      launch_package:  { 
+      lunch_package:  { 
         users: user.id , 
         meals: Meal.first(5).pluck(:id),
         date: { month: LunchPackage.months.values.sample, year: Date.today.to_s } 
@@ -30,14 +30,14 @@ class LunchPackageFlowTest < ActionDispatch::IntegrationTest
     year = Date.today.year.to_s
     post lunch_packages_path,
       params: { 
-      launch_package:  { 
+      lunch_package:  { 
         users: user.id , 
         meals: Meal.first(5).pluck(:id),
         date: { month: month, year: year } 
       } } 
     assert_response :redirect
     assert_redirected_to meals_url
-    get launch_packages_url
+    get lunch_packages_url
     assert_select 'h1', 'Meals per user'
     assert_select 'h2', LunchPackage.months.key(month)
   end

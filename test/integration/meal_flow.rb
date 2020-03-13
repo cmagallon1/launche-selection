@@ -4,7 +4,7 @@ class MealFlowTest < ActionDispatch::IntegrationTest
   
   def test_can_see_initial_page
     get '/'
-    assert_select 'h1', 'Launch Selection'
+    assert_select 'h1', 'Lunch Selection'
     assert_select 'a', { :count => 3 } 
   end
 

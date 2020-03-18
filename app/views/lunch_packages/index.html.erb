@@ -2,26 +2,15 @@
 
 <%= link_to 'Back', meals_path %>
 
-<% user = '' %>
-<% month = '' %>
-<% year = '' %>
-<% @packages.map do |record| %>
-  <% if year != record.year %>
-    <% year = record.year %>
-    <h2> <%= year %> </h2>
+<% @packages.each do |month, records| %>
+  <h2><%= month %></h2>
+  <% records.group_by(&:user).each do |user, meals| %>
+    <h2> <%= user.name %> </h2>
+    <ul>
+      <% meals.each do |meal| %>
+        <li> <%= meal.meal.name %></li>
+        <%= image_tag(meal.meal.image, size: '200') %>
+      <% end %>
+    </ul>
   <% end %>
-
-  <% if month != record.month %>
-    <% month = record.month %>
-    <h2> <%= month %> </h2>
-  <% end %>
-  <% if user != record.user.name %>
-    <% user = record.user.name %>
-    <h2><%= user %></h2>
-  <% end %>
-
-  <ul>
-    <li> <%= record.meal.name %></li>
-    <%= image_tag(record.meal.image, size: '200') %>
-  </ul>
 <% end %>

@@ -3,8 +3,8 @@
 <%= link_to 'Create new entry', new_meal_path %><br>
 <%= link_to 'Select monthly entries', new_lunch_package_path %><br>
 <%= link_to 'See peer launch package', lunch_packages_path %><br>
+<%= link_to 'Edit last monthly package', edit_lunch_package_path(current_user) %><br>
 <%= link_to 'Log out', session_path(current_user), method: :delete %>
-<%= link_to 'Edit last monthly package', edit_lunch_package_path(current_user) %>
 
 <h2>Meals</h2>
 

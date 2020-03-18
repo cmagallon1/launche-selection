@@ -12,3 +12,8 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
+#
+# Loads assets folder to covegare report, only visible for development
+if Rails.env.development?
+    Rails.application.config.assets.paths << Rails.root.join("public/coverage/assets")
+end

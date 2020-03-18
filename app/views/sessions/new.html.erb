@@ -1,0 +1,14 @@
+<h1>login to continue</h2>
+<%= form_with model: @user, url: sessions_path, local: true do |f| %>
+  <p>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :password %>
+    <%= f.text_field :password %>
+  </p>
+  <p>
+    <%= f.submit :submit %>
+  </p>
+<% end %>

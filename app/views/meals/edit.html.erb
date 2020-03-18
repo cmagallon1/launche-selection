@@ -1,0 +1,18 @@
+<% if current_user.id == @meal.user_id || current_user.admin? %>
+  <%= form_with model: @meal, url: meal_path, local: true do |f| %>
+    <p>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </p>
+    <p>
+      <%= f.label :image  %>
+      <%= f.file_field :image %>
+    </p>
+    <p>
+      <%= f.submit :"Update meal" %>
+    </p>
+  <%= link_to 'Back', meals_path %>
+<% end %>
+<% else %>
+  <h1>You're not authorized to modify this meal</h1>
+<% end %>

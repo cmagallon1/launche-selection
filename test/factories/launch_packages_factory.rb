@@ -1,4 +1,4 @@
-
+include ActionDispatch::TestProcess
 FactoryBot.define do 
   factory :lunch_package do
     user_id { User.all.sample.id }

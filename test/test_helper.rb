@@ -1,11 +1,14 @@
 require 'simplecov'
-SimpleCov.root("#{Rails.root}/public")
 SimpleCov.start 'rails' do
-    filters.clear
-      add_filter do |src|
-            !(src.filename =~ /^#{Rails.root}/) unless src.filename =~ /test/
-              end
+  filters.clear # This will remove the :root_filter and :bundler_filter that come via simplecov's defaults
+  add_filter do |src|
+    !(src.filename =~ /^#{SimpleCov.root}/) unless src.filename =~ /test/
+  end
+
+  add_group 'Controllers', 'app/controllers'
+  add_group 'Models', 'app/models'
 end
+SimpleCov.root("public")
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 require 'rails/test_help'

@@ -2,7 +2,7 @@ class LunchPackagesService
 
   def update_package(meals, user)
     if valid_package?(meals, user)
-      package = update_meals(user, meals)
+      update_meals(user, meals)
     end
   end
 
@@ -28,7 +28,7 @@ class LunchPackagesService
 
   def already_package?(user, meals)
     user_meals = LunchPackage.user_meals(user, meals)
-    !user_meals.all? { |i| meals.include?(i) } 
+    false if user_meals.empty? || user_meals.all? { |i| meals.include?(i) }
   end
 
   def save_package(meals, user, date)

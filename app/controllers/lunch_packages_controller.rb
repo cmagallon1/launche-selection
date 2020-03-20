@@ -9,7 +9,7 @@ class LunchPackagesController < ApplicationController
 
   def create
     user = User.find(package_params[:users])
-    date = params[:lunch_package][:date] ? params[:lunch_package][:date] : params[:date]
+    date = params[:lunch_package][:date] || params[:date]
     @package = LunchPackagesService.new.build_package(date, user, package_params[:meals])
     redirect_user(@package) 
   end

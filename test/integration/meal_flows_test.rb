@@ -4,8 +4,9 @@ class MealFlowTest < ActionDispatch::IntegrationTest
   
   def test_can_see_initial_page
     get '/'
-    assert_select 'h1', 'Lunch Selection'
-    assert_select 'a', { :count => 3 } 
+    user = create(:user)
+    post sessions_path, params: { user: {  name: user.name, password: user.password  } }
+    assert_redirected_to meals_url
   end
 
   def test_user_can_add_new_entry

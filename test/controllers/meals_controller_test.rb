@@ -27,7 +27,7 @@ class MealsControllerTest < ActionDispatch::IntegrationTest
     assert_equal new_name, meal.name
   end
 
-  def test_update_meal
+  def test_update_meal_failed
     user = create(:user)
     meal = build(:meal, user_id: user.id)
     assert meal.save

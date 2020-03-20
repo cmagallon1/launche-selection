@@ -9,7 +9,7 @@ class Meal < ApplicationRecord
   validate :image_type
 
   def image_type
-    if image.attached? == false
+    unless image.attached?
       errors.add(:image, "is missing!")
     else 
       if !image.content_type.in?(%('image/jpeg image/png'))

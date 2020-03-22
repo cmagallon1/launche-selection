@@ -1,0 +1,18 @@
+<h2>Meals</h2>
+
+<table>
+  <tr>
+    <td> Meal name </td>
+    <td> Image </td>
+  </tr>
+  <% @meals.each do |meal| %>
+    <tr>
+      <td><%= meal.name %></td>
+      <td><%= image_tag(url_for(meal.image), size: '200') %></td>
+      <td><%= link_to 'Edit', edit_meal_path(meal) %></td>
+      <td><%= link_to 'Show', meal_path(meal) %></td>
+    </tr>
+  <% end %> 
+</table
+
+

@@ -1,10 +1,9 @@
 require 'simplecov'
 SimpleCov.start 'rails' do
   filters.clear # This will remove the :root_filter and :bundler_filter that come via simplecov's defaults
-  add_filter /vendor/
-  add_filter /config/
+  add_filter '/vendor/'
+  add_filter '/config/'
   add_filter 'app/channels'
-  add_filter 'app/mailers'
   add_filter 'app/jobs'
   add_filter 'app/helpers'
   add_filter 'app/controllers/coverages_controller.rb'

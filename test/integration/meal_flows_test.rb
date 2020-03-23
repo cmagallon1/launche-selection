@@ -13,7 +13,7 @@ class MealFlowTest < ActionDispatch::IntegrationTest
     assert_response :success
     post meals_path, params: { meal: attributes_for(:meal)  } 
     assert_response :redirect
-    assert_redirected_to meals_url
+    assert_redirected_to meal_path(Meal.first.id)
   end
 
   def test_user_can_see_errors_in_bad_new_entry

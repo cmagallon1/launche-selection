@@ -34,7 +34,7 @@ class LunchPackagesController < ApplicationController
     meals = package_params[:meals]
     @package = LunchPackagesService.update_package(meals, current_user)
     if @package 
-      redirect_to users_path
+      redirect_to meals_path
     else 
       param_error('You have inserted an invalid package') 
     end

@@ -46,7 +46,7 @@ class LunchPackagesControllerTest < ActionDispatch::IntegrationTest
         meals: Meal.pluck(:id).shuffle[0..4]
       }
     }
-    assert_redirected_to users_path
+    assert_redirected_to meals_path
   end
 
   private 

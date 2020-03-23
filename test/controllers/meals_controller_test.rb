@@ -17,7 +17,7 @@ class MealsControllerTest < ActionDispatch::IntegrationTest
     assert_difference("Meal.count") do
       create(:user)
       post meals_path, params: { meal: attributes_for(:meal) }
-      assert_redirected_to meals_path
+      assert_redirected_to meal_path(Meal.first.id)
     end
   end
 

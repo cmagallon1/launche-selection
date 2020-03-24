@@ -24,8 +24,6 @@ class LunchPackagesService
     def already_package?(user, date)
       user_meals = LunchPackage.where(user_id: user.id, month: date[:month], year: date[:year])
       !user_meals.empty?
-      #user_meals = LunchPackage.user_meals(user, meals)
-      #false if user_meals.empty? || user_meals.all? { |i| meals.include?(i) }
     end
 
     def save_package(meals, user, date)

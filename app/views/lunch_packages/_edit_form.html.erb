@@ -1,10 +1,12 @@
-<%= form_with model: @package, url: lunch_package_path, method: :patch, local:true do |f| %>
-  <h2>Select 5 meals for your package(just 5)</h2>
+<%= form_with scope: :lunch_package, url: user_lunch_packages_path, method: "patch", local:true do |f| %>
+  <h2>Select 5 meals for your package</h2>
   <p>
     <%= f.label :meals %></br>
-    <%= f.collection_select(:meals, Meal.all, :id, :name, { include_blank: false, include_hidden: false }, { multiple: true}) %> 
+
+    <%= f.collection_select(:meals, @meals, :id, :name, { include_blank: false, include_hidden: false }, { multiple: true}) %> 
   </p>
   <p>
-    <%= f.submit :submit %>
+    <%= f.submit :"Update package" %>
   </p>
+  <%= link_to 'Back', meals_path %>
 <%end%>

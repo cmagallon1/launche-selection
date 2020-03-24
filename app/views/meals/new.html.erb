@@ -25,11 +25,8 @@
   </p>
 
   <p>
-    <%= f.label :user_id %>
-    <%= f.collection_select(:user_id, User.all, :id, :name, { include_blank: false, include_hidden: false }) %> 
+    <%= f.submit :"Create meal" %>
   </p>
-
-  <%= f.submit :"Create meal" %>
 <% end %>
 
 <%= link_to 'Back', meals_path %>

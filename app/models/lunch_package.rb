@@ -5,7 +5,7 @@ class LunchPackage < ApplicationRecord
   belongs_to :meal
 
   scope :user_meals, ->(user, meals){ where(meal_id: meals, user_id: user.id).pluck(:meal_id)  }
-  scope :last_month_meals, ->(user) { where(user_id: user.id, month: Date::MONTHNAMES[Date.today.month]) }
+  scope :last_month_meals, ->(user) { where(user_id: user, month: Date::MONTHNAMES[Date.today.month]) }
 
   scope :monthly_lunches, -> { LunchPackage.group(:user_id, :meal_id, :month).select(:user_id, :meal_id, :month) }
 

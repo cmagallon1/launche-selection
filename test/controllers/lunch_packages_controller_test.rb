@@ -1,13 +1,20 @@
 require 'test_helper'
 
 class LunchPackagesControllerTest < ActionDispatch::IntegrationTest
+
+  def setup
+    @user = create(:user)
+    post sessions_path, params: { user: { email: @user.email, password: @user.password  }  } 
+    assert_redirected_to meals_path
+  end
+
   def test_redirect_to_launch_packages
-    get lunch_packages_url
+    get user_lunch_packages_url(@user.id)
     assert_response :success
   end
 
   def test_redirect_to_new_launch_package
-    get new_lunch_package_url
+    get new_user_lunch_packages_url(@user.id)
     assert_response :success
   end
 
@@ -15,7 +22,7 @@ class LunchPackagesControllerTest < ActionDispatch::IntegrationTest
     assert_difference("LunchPackage.count", +5) do 
       create(:user)
       generate_package
-      post lunch_packages_path, params: {
+      post user_lunch_packages_url(@user.id), params: {
         lunch_package:
         { users: 
           User.first.id,
@@ -23,23 +30,23 @@ class LunchPackagesControllerTest < ActionDispatch::IntegrationTest
           date: { month: LunchPackage.months.values.sample, year: Date.today.year.to_s  }
         }
       }
-      assert_redirected_to meals_path                                                             
+      assert_response :success                                                          
     end
   end
 
   def test_update_last_lunch_package
     user = create(:user)
     generate_package
-    post sessions_path, params: { user: { name: user.name, password: user.password  }  } 
+    post sessions_path, params: { user: { email: user.email, password: user.password  }  } 
     assert_redirected_to meals_path
     create(:lunch_package)
     generate_package
-    patch lunch_package_path(user.id), params: {
+    patch user_lunch_packages_path(user.id), params: {
       lunch_package: {
         meals: Meal.pluck(:id).shuffle[0..4]
       }
     }
-    assert_response :success
+    assert_redirected_to meals_path
   end
 
   private 

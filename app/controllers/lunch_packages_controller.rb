@@ -1,42 +1,56 @@
 class LunchPackagesController < ApplicationController
-  def index
-    @packages = LunchPackage.monthly_lunches.group_by(&:month)
+  before_action :authorized
+
+  def show
+    @packages = LunchPackage.where(user_id: params[:user_id]).order(month: :desc).group_by(&:month)
+    @packages = @packages.map { |key, value| { "#{key}":value.group_by(&:year) } }
   end
 
   def new
-    @package = LunchPackage.new
   end
 
   def create
-    user = User.find(package_params[:users])
     date = params[:lunch_package][:date] || params[:date]
-    @package = LunchPackagesService.new.build_package(date, user, package_params[:meals])
-    redirect_user(@package) 
+    user = current_user
+    meals = package_params[:meals]
+    @package = LunchPackagesService.build_package(date, user, meals)
+    if @package 
+      UserMailer.with(user: user).new_package.deliver_now
+      redirect_to meals_path
+    else 
+      param_error('You have inserted an invalid package') 
+    end
+  rescue Exception
+    param_error('You did not fill all the fields', 'new')
   end
 
   def edit
+    @meals = Meal.all
+    @package = LunchPackage.last_month_meals(params[:user_id])
   end
 
   def update
-    @package = LunchPackagesService.new.update_package(params[:meals], current_user)
+    @meals = Meal.all
+    meals = package_params[:meals]
+    @package = LunchPackagesService.update_package(meals, current_user)
     if @package 
       redirect_to meals_path
     else 
-      render 'edit'
+      param_error('You have inserted an invalid package') 
     end
+  rescue Exception
+    @package = LunchPackage.last_month_meals(params[:user_id])
+    param_error('You did not fill all the fields', 'edit')
   end
 
   private
 
-  def redirect_user(package)
-    if package
-      redirect_to meals_path
-    else 
-      redirect_to new_lunch_package_path
-    end
+  def package_params
+    params.require(:lunch_package).permit(:users, date: {}, meals: [])
   end
 
-   def package_params
-    params.require(:lunch_package).permit(:users, date: {}, meals: [])
+  def param_error(message, view)
+    flash.now[:error] = message 
+    render view
   end
 end

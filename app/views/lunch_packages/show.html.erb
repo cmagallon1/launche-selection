@@ -1,0 +1,28 @@
+<h1>Monthly meals</h1>
+
+<%= link_to 'Back', users_path %>
+
+<% @packages.each do |monthly_package| %>
+  <% monthly_package.each do |month, years| %>
+    <h2><%= month %></h2>
+    <% years.each do |year, meals| %>
+      <h2><%= year %></h2>
+      <table>
+        <thead>
+          <tr>
+            <td>Meal</td>
+            <td>Image</td>
+          </tr>
+        </thead>
+        <tbody>
+          <% meals.each do |meal| %>
+            <tr>
+              <td><%= meal.meal.name %></td>
+              <td><%= image_tag(meal.meal.image, width:'200') %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  <% end %>
+<% end%>

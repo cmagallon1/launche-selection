@@ -1,4 +1,5 @@
 class MealsController < ApplicationController
+
   def index
     @meals = Meal.all
   end
@@ -12,9 +13,9 @@ class MealsController < ApplicationController
   end
 
   def create 
-    @meal = Meal.new(meal_params)
+    @meal = Meal.new(name: meal_params[:name], image: meal_params[:image], user_id: current_user.id)
     if @meal.save 
-      redirect_to meals_path
+      redirect_to @meal
     else 
       render 'new'
     end
@@ -39,6 +40,6 @@ class MealsController < ApplicationController
 
   private 
   def meal_params 
-    params.require(:meal).permit(:name, :image, :user_id)
+    params.require(:meal).permit(:name, :image)
   end
 end

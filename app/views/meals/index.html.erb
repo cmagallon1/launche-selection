@@ -1,26 +1,9 @@
 <h1>Lunch Selection</h1>
 
 <%= link_to 'Create new entry', new_meal_path %><br>
-<%= link_to 'Select monthly entries', new_lunch_package_path %><br>
-<%= link_to 'See peer launch package', lunch_packages_path %><br>
-<%= link_to 'Edit last monthly package', edit_lunch_package_path(current_user) %><br>
+<%= link_to 'Select monthly entries', new_user_lunch_packages_path(current_user.id) %><br>
+<%= link_to 'See peer packages list', users_path %><br>
+<%= link_to 'Edit last monthly package', edit_user_lunch_packages_path(current_user.id) %><br>
 <%= link_to 'Log out', session_path(current_user), method: :delete %>
 
-<h2>Meals</h2>
-
-<table>
-  <tr>
-    <td> Meal name </td>
-    <td> Image </td>
-  </tr>
-  <% @meals.each do |meal| %>
-    <tr>
-      <td><%= meal.name %></td>
-      <td><%= image_tag(url_for(meal.image), size: '200') %></td>
-      <td><%= link_to 'Edit', edit_meal_path(meal) %></td>
-      <td><%= link_to 'Show', meal_path(meal) %></td>
-    </tr>
-  <% end %> 
-</table
-
-
+<%= render 'meals' %>

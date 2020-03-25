@@ -15,7 +15,7 @@ class LunchPackagesController < ApplicationController
     meals = package_params[:meals]
     @package = LunchPackagesService.build_package(date, user, meals)
     if @package 
-      UserMailer.with(user: user).new_package.deliver_now
+      AdminEmailsJob.perform_now(user)
       redirect_to meals_path
     else 
       param_error('You have inserted an invalid package') 

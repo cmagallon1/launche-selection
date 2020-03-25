@@ -5,12 +5,11 @@ class LunchPackagesService
     end
 
     def update_meals(user, meals)
-      package = ''
-      LunchPackage.last_month_meals(user).each_with_index do |meal, i|
-        package = meal.update(meal_id: meals[i])
-        break unless package
+      LunchPackage.transaction do 
+        LunchPackage.last_month_meals(user).each_with_index do |meal, i|
+          meal.update!(meal_id: meals[i])
+        end
       end
-      package
     end
 
     def build_package(date, user, meals)

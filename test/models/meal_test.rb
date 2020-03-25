@@ -7,7 +7,7 @@ class MealTest < ActiveSupport::TestCase
   end
 
   def test_save_meal_without_name
-    meal = build(:meal, meal_name: "")
+    meal = build(:meal, name: nil)
     assert_not meal.valid?
   end
 

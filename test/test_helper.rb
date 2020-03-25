@@ -4,7 +4,6 @@ SimpleCov.start 'rails' do
   add_filter '/vendor/'
   add_filter '/config/'
   add_filter 'app/channels'
-  add_filter 'app/jobs'
   add_filter 'app/helpers'
   add_filter 'app/controllers/coverages_controller.rb'
   add_group 'Controllers', 'app/controllers'
@@ -14,6 +13,7 @@ end
 SimpleCov.root("public")
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
+#require 'sidekiq/testing'
 require 'rails/test_help'
 
 class ActiveSupport::TestCase

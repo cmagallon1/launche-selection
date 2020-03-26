@@ -3,7 +3,6 @@ class Meal < ApplicationRecord
 
   has_many :lunch_packages
   has_many :users, through: :lunch_packages
-
   has_one_attached :image
 
   validate :image_type

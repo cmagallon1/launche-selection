@@ -1,11 +1,9 @@
 class MealsController < ApplicationController
+  before_action :find_meal, only: [:show, :edit, :update]
+  before_action :validate_user, only: [:edit, :update]
 
   def index
     @meals = Meal.all
-  end
-
-  def show
-    @meal = Meal.find(params[:id])
   end
 
   def new
@@ -13,7 +11,7 @@ class MealsController < ApplicationController
   end
 
   def create 
-    @meal = Meal.new(name: meal_params[:name], image: meal_params[:image], user_id: current_user.id)
+    @meal = Meal.new(meal_params.merge(user_id: current_user.id))
     if @meal.save 
       redirect_to @meal
     else 
@@ -21,26 +19,25 @@ class MealsController < ApplicationController
     end
   end
 
-  def edit
-    @meal = Meal.find(params[:id])
-    redirect_to meals_path unless current_user.id == @meal.user_id
-  end
-
   def update
-    @meal = Meal.find(params[:id])
-    if current_user.id == @meal.user_id 
-      if @meal.update(meal_params)
-        redirect_to @meal
-      else
-        render 'edit'
-      end
-    else 
+    if @meal.update(meal_params)
+      redirect_to @meal
+    else
       render 'edit'
     end
   end
 
   private 
+
   def meal_params 
     params.require(:meal).permit(:name, :image)
+  end
+
+  def find_meal
+    @meal = Meal.find(params[:id])
+  end
+
+  def validate_user
+    redirect_to meals_path unless current_user.id == @meal.user_id 
   end
 end

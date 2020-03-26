@@ -23,6 +23,7 @@ class MealsController < ApplicationController
 
   def edit
     @meal = Meal.find(params[:id])
+    redirect_to meals_path unless current_user.id == @meal.user_id
   end
 
   def update

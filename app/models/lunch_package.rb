@@ -1,7 +1,8 @@
 class LunchPackage < ApplicationRecord
   validates :month, presence: true
 
-  belongs_to :user, :meal
+  belongs_to :user
+  belongs_to :meal
 
   scope :last_month_meals, ->(user) { where(user_id: user, month: Date::MONTHNAMES[Date.today.month]) }
 

@@ -6,7 +6,7 @@
   <h3>Select 5 meals for your package</h3>
   <p>
     <%= f.label :meals %></br>
-    <%= f.collection_select(:meals, Meal.all, :id, :name, { include_blank: false, include_hidden: false }, { multiple: true}) %> 
+    <%= f.collection_select(:meals, @meals, :id, :name, { include_blank: false, include_hidden: false }, { multiple: true}) %> 
   </p>
   <h3>Select the date for that package</h3>
   <%= select_month(Date.today) %>

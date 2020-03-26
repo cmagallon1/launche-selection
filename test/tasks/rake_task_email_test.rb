@@ -6,7 +6,8 @@ class RakeTaskEmailTest < ActionMailer::TestCase
     user = build(:user, email: 'cmagallon@ucol.mx')
     user.save
     users = User.all
-    Rake::Task['email:send_emails'].invoke
-    assert_emails users.size
+    assert_emails users.size do
+      Rake::Task['email:send_emails'].invoke
+    end
   end
 end

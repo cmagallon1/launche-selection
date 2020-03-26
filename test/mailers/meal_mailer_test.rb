@@ -15,15 +15,20 @@ class MealMailerTest < ActionMailer::TestCase
     Sidekiq::Queues['emails'].clear
   end
 
+  def test_meal_email_job
+    user = build(:user, email: 'cmagallon@ucol.mx')
+    user.save
+    assert_emails 1 do 
+      UserEmailsJob.perform_now
+    end
+  end
+
   def test_send_email_to_users
     user = build(:user, email: 'cmagallon@ucol.mx')
     user.save
-    User.all.each do |user|
-      email = MealMailer.with(user: user).monthly_package
-      email.to = user.email
-      assert_emails 1 do
-        email.deliver_now
-      end
+    email = MealMailer.with(user: user).monthly_package
+    assert_emails 1 do
+      email.deliver_now
     end
   end
 end

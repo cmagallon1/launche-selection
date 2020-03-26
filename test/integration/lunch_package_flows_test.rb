@@ -20,7 +20,7 @@ class LunchPackageFlowTest < ActionDispatch::IntegrationTest
         meals: Meal.first(5).pluck(:id),
         date: { month: LunchPackage.months.values.sample, year: Date.today.to_s } 
       } } 
-    assert_response :success
+    assert_redirected_to meals_path
   end
 
   def test_user_can_see_peer_lunch_packages
@@ -36,7 +36,7 @@ class LunchPackageFlowTest < ActionDispatch::IntegrationTest
         meals: Meal.first(5).pluck(:id),
         date: { month: month, year: year } 
       } } 
-    assert_response :success
+    assert_redirected_to meals_path
     get users_url
     assert_response :success
     get user_lunch_packages_url(@user.id)

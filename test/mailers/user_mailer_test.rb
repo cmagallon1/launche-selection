@@ -4,6 +4,7 @@ require 'sidekiq/testing'
 class UserMailerTest < ActionMailer::TestCase
   def setup 
     @user = build(:user, email: 'cesar9mv@gmail.com')
+    @user.save
     @user.update(role: 2)
   end
 
@@ -19,12 +20,14 @@ class UserMailerTest < ActionMailer::TestCase
     Sidekiq::Queues['emails'].clear
   end
 
-
-
+  def test_admin_email_job
+    assert_emails 1 do 
+      AdminEmailsJob.perform_now(@user)
+    end
+  end
 
   def test_send_new_package_mail
     email = UserMailer.with(user: @user).new_package
-    email.to = @user.email
     assert_emails 1 do
       email.deliver_now
     end 

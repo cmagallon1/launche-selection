@@ -39,7 +39,6 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'knapsack_pro'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'knapsack_pro'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 

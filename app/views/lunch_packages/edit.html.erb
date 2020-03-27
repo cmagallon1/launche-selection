@@ -1,11 +1,6 @@
-<% if @package.any? %>
 <h1>Edit your last package</h1>
   <% if flash[:error] %>
     <h2>Error: </h2>
     <h2><%= flash[:error] %></h2>
   <% end %>
-  <%= render 'edit_form' %>
-<% else %>
-  <h1>You dont have any package yet</h1>
-  <%= link_to 'Back', meals_path %> 
-<% end %>
+<%= render 'edit_form' %>

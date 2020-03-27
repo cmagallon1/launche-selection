@@ -30,7 +30,7 @@ class LunchPackagesControllerTest < ActionDispatch::IntegrationTest
           date: { month: LunchPackage.months.values.sample, year: Date.today.year.to_s  }
         }
       }
-      assert_response :success                                                          
+      assert_redirected_to meals_path                                                         
     end
   end
 

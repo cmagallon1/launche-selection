@@ -5,6 +5,7 @@ class User < ApplicationRecord
 
   has_many :lunch_packages
   has_many :meals, through: :lunch_packages
+  has_one :meal
 
   enum role: { common: 1, admin: 2 }
 
@@ -14,5 +15,4 @@ class User < ApplicationRecord
     self.role = 1
   end
 
-  has_one :meal
 end

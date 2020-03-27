@@ -38,6 +38,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 group :development, :test do
   gem 'factory_bot_rails'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'knapsack_pro'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 

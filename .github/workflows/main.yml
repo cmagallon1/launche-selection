@@ -30,9 +30,26 @@ jobs:
         - 5432/tcp
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     # Steps represent a sequence of tasks that will be executed as part of the job
+
+    strategy:
+      fail-fast: false
+      matrix:
+        #Set N number of parallel jobs you want to run tests on.
+        # Use higher number if you have slow tests to split them on more parallel jobs.
+        # Remember to update ci_node_index below to 0..N-1
+        ci_node_total: [2]
+        # set N-1 indexes for parallel jobs
+        # When you run 2 parallel jobs then first job will have index 0, the second job will have index 1 etc
+        ci_node_index: [0, 1]
+
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
+
+    - name: Set up Ruby 2.7
+      uses: actions/setup-ruby@v1
+      with: 
+        ruby-version: 2.7.0
     
     - name: Install PostgreSQL client
       run: sudo apt-get install libpq-dev
@@ -41,11 +58,11 @@ jobs:
       env:
        PGHOST: localhost
        PGUSER: postgres
+       PGPASSWORD: postgres
        PGPORT: ${{ job.services.postgres.ports[5432] }}
        RAILS_ENV: test
       run: |
         gem install bundler
-        bundle config path vendor/bundle
         bundle install --jobs 4 --retry 3
         bin/rails db:setup
 
@@ -53,8 +70,11 @@ jobs:
       env:
         PGHOST: localhost
         PGUSER: postgres
+        PGPASSWORD: postgres
         PGPORT: ${{ job.services.postgres.ports[5432] }}
         RAILS_ENV: test
         KNAPSACK_PRO_TEST_SUITE_TOKEN_MINITEST: ${{ secrets.KNAPSACK_PRO_TEST_SUITE_TOKEN_MINITEST }} 
+        KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total  }}
+        KNAPSACK_PRO_CI_NODE_INDEX: ${{ matrix.ci_node_index  }}
       run: |
         bundle exec rake knapsack_pro:minitest

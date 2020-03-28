@@ -1,4 +1,6 @@
 require 'simplecov'
+require 'knapsack_pro'
+
 SimpleCov.start 'rails' do
   filters.clear # This will remove the :root_filter and :bundler_filter that come via simplecov's defaults
   add_filter '/vendor/'
@@ -15,6 +17,9 @@ ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 #require 'sidekiq/testing'
 require 'rails/test_help'
+
+knapsack_pro_adapter = KnapsackPro::Adapters::MinitestAdapter.bind
+knapsack_pro_adapter.set_test_helper_path(__FILE__)
 
 class ActiveSupport::TestCase
   # Run tests in parallel with specified workers

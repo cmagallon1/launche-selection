@@ -28,7 +28,6 @@ gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'mast
 
 gem 'whenever', require: false
 
-gem 'pry', '~> 0.12.2'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 gem 'simplecov', require: false, group: :test
@@ -36,6 +35,7 @@ gem 'simplecov', require: false, group: :test
 gem 'bootsnap', '>= 1.4.2', require: false
 
 group :development, :test do
+  gem 'pry', '~> 0.12.2'
   gem 'factory_bot_rails'
   gem 'knapsack_pro'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

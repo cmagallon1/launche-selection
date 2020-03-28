@@ -49,6 +49,12 @@ class LunchPackagesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to meals_path
   end
 
+  def test_update_package_without_having_one
+    get edit_user_lunch_packages_path(@user)
+    assert_response :success
+    assert_select 'h1', "You don't have any package yet"
+  end
+
   private 
   def generate_package
     5.times do 

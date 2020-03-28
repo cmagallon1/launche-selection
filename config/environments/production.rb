@@ -28,7 +28,7 @@ Rails.application.configure do
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
 
-  config.action_mailer.default_url_options = { :host => 'https://lunch-selection.herokuapp.com', protocol: 'https' }
+  config.action_mailer.default_url_options = { :host => 'lunch-selection.herokuapp.com', protocol: 'https' }
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
@@ -79,8 +79,6 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "lunch_project_production"
 
   config.action_mailer.perform_caching = false
-
-  config.active_job.queue_adapter = :sidekiq
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

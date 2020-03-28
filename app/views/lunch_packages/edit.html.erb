@@ -1,6 +1,11 @@
+<% if flash[:no_package] %>
+  <h1><%= flash[:no_package] %></h1>
+  <%= link_to 'Back', meals_path %>
+<% else %>
 <h1>Edit your last package</h1>
   <% if flash[:error] %>
     <h2>Error: </h2>
     <h2><%= flash[:error] %></h2>
   <% end %>
-<%= render 'edit_form' %>
+  <%= render 'edit_form' %>
+<% end %>

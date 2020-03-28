@@ -80,3 +80,21 @@ jobs:
         KNAPSACK_PRO_CI_NODE_INDEX: ${{ matrix.ci_node_index  }}
       run: |
         bundle exec rake knapsack_pro:minitest
+
+    - name: Log in to heroku
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:login
+      if: github.event == 'push'  
+
+    - name: Build an push to heroku
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:push -a lunch_selection web 
+      if: github.event == 'push'
+
+    - name: Deploy to heroku
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:push -a lunch_selection web 
+      if: github.event == 'push'

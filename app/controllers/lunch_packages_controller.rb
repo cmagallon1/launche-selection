@@ -22,7 +22,7 @@ class LunchPackagesController < ApplicationController
 
   def edit
     @package = LunchPackage.last_month_meals(params[:user_id] || current_user.id)
-    redirect_to meals_path unless @package
+    flash.now[:no_package] = "You don't have any package yet" if @package.empty?
   end
 
   def update

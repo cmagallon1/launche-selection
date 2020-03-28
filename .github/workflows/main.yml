@@ -108,57 +108,55 @@ jobs:
         
     if: github.event == 'push'
     steps:
-        # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-        - uses: actions/checkout@v2
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
 
-        - name: Set up Ruby 2.7
-          uses: actions/setup-ruby@v1
-          with: 
-            ruby-version: 2.7.0
+    - name: Set up Ruby 2.7
+      uses: actions/setup-ruby@v1
+      with: 
+        ruby-version: 2.7.0
 
-        - name: Install PostgreSQL client
-          run: sudo apt-get install libpq-dev
+    - name: Install PostgreSQL client
+      run: sudo apt-get install libpq-dev
 
-        - name: Build and create DB
-          env:
-           PGHOST: localhost
-           PGUSER: postgres
-           PGPASSWORD: postgres
-           PGPORT: ${{ job.services.postgres.ports[5432] }}
-           RAILS_ENV: test
-          run: |
-            gem install bundler
-            bundle install --jobs 4 --retry 3
-            bin/rails db:setup
-            yarn install --check-files
-            bundle exec rails webpacker:compile
+    - name: Build and create DB
+      env:
+       PGHOST: localhost
+       PGUSER: postgres
+       PGPASSWORD: postgres
+       PGPORT: ${{ job.services.postgres.ports[5432] }}
+       RAILS_ENV: test
+      run: |
+        gem install bundler
+        bundle install --jobs 4 --retry 3
+        bin/rails db:setup
+        yarn install --check-files
+        bundle exec rails webpacker:compile
 
-        - name: Run test
-          env:
-            PGHOST: localhost
-            PGUSER: postgres
-            PGPASSWORD: postgres
-            PGPORT: ${{ job.services.postgres.ports[5432] }}
-            RAILS_ENV: test
-            KNAPSACK_PRO_TEST_SUITE_TOKEN_MINITEST: ${{ secrets.KNAPSACK_PRO_TEST_SUITE_TOKEN_MINITEST }} 
-            KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total  }}
-            KNAPSACK_PRO_CI_NODE_INDEX: ${{ matrix.ci_node_index  }}
-          run: |
-            bundle exec rake knapsack_pro:minitest
+    - name: Run test
+      env:
+        PGHOST: localhost
+        PGUSER: postgres
+        PGPASSWORD: postgres
+        PGPORT: ${{ job.services.postgres.ports[5432] }}
+        RAILS_ENV: test
+        KNAPSACK_PRO_TEST_SUITE_TOKEN_MINITEST: ${{ secrets.KNAPSACK_PRO_TEST_SUITE_TOKEN_MINITEST }} 
+        KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total  }}
+        KNAPSACK_PRO_CI_NODE_INDEX: ${{ matrix.ci_node_index  }}
+      run: |
+        bundle exec rake knapsack_pro:minitest
 
-        - name: Log in to heroku
-          env:
-            HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          run: heroku container:login
-          if: github.event == 'push'  
+    - name: Log in to heroku
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:login
 
-        - name: Build an push to heroku
-          env:
-            HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          run: heroku container:push -a lunch_selection web 
-          if: github.event == 'push'
+    - name: Build an push to heroku
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:push -a lunch_selection web 
 
-        - name: Deploy to heroku
-          env:
-            HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          run: heroku container:push -a lunch_selection web
+    - name: Deploy to heroku
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:push -a lunch_selection web

@@ -40,7 +40,12 @@ Rails.application.configure do
     authentication:       'plain',
     enable_starttls_auto: true }
 
+
+  config.action_mailer.perform_deliveries = true
+
   config.active_job.queue_adapter = :sidekiq
+
+  config.action_mailer.raise_delivery_errors = true
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = 'http://assets.example.com'
 

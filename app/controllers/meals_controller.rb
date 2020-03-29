@@ -38,6 +38,6 @@ class MealsController < ApplicationController
   end
 
   def validate_user
-    redirect_to meals_path unless current_user.id == @meal.user_id 
+    redirect_to meals_path unless current_user.id == @meal.user_id || current_user.admin?
   end
 end

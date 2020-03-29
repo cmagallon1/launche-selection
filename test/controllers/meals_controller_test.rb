@@ -42,5 +42,18 @@ class MealsControllerTest < ActionDispatch::IntegrationTest
     meal.reload
     assert_not_equal new_name, meal.name
   end
+
+  def test_update_meal_if_admin
+    meal = build(:meal, user_id: @user.id)
+    assert meal.save
+    new_user = create(:user)
+    new_user.update(role: 2)
+    post sessions_path, params: { user: { email: new_user.email, password: new_user.password  }  } 
+    assert_redirected_to meals_path
+    new_name = Faker::Name.name
+    patch meal_path(meal), params: { meal: { name: new_name } } 
+    meal.reload
+    assert_equal new_name, meal.name
+  end
 end
 

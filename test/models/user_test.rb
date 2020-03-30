@@ -11,10 +11,26 @@ class UserTest < ActiveSupport::TestCase
   end
 
   def test_assign_admin_role_to_user
-    user = User.new( name: Faker::Name.name, password: Faker::Lorem.word, role: 2 )
-    assert user.admin?
+    user =  build(:user)
     assert user.valid?
-    assert user.common?
+    user.save
+    user.update(role: 2)
+    assert user.admin?
+  end
+
+  def test_save_user_without_name
+    user = build(:user, name: nil)
+    assert_not user.valid?
+  end
+
+  def test_save_user_without_email
+    user = build(:user, email: nil)
+    assert_not user.valid?
+  end
+
+  def test_save_user_with_invalid_email
+    user = build(:user, email: Faker::Lorem.word)
+    assert_not user.valid?
   end
 
 end
